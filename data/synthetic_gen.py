@@ -5,6 +5,13 @@ import sys
 from pathlib import Path
 from typing import List, Dict
 
+# Fix unicode print on Windows
+if sys.stdout.encoding != 'utf-8':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except AttributeError:
+        pass
+
 # Add Day09 src path to sys.path
 day09_dir = Path(__file__).resolve().parents[1] / "Day09_Le-Ba-Chien-2A202600755"
 src_dir = day09_dir / "src"
