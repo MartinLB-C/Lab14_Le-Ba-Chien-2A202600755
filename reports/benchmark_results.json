@@ -1,0 +1,1256 @@
+[
+  {
+    "test_case": "Tài liệu này được tạo ra nhằm mục đích gì?",
+    "agent_response": "Answer: Tài liệu này được tạo ra nhằm mục đích hướng dẫn và quy định cách xử lý yêu cầu của khách hàng bằng cách phối hợp giữa các thành phần trong hệ thống (Supervisor, Policy Worker, Data Worker và Response Agent), đảm bảo câu trả lời cuối cùng tuân thủ chính sách, dựa trên dữ liệu thực tế và được trình bày theo đúng định dạng yêu cầu.",
+    "latency": 5.835691599990241,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 2.5,
+      "agreement_rate": 0.5,
+      "individual_scores": {
+        "judge_primary": 3,
+        "judge_secondary": 2
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Loại câu hỏi nào sau đây KHÔNG được đề cập trong ví dụ của tài liệu?",
+    "agent_response": "Status: not_found  \nMessage: Dạ em không tìm thấy dữ liệu cho mã đơn hàng này.",
+    "latency": 3.6514189000008628,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.25
+      }
+    },
+    "judge": {
+      "final_score": 1.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 1,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Giả sử một hệ thống RAG được triển khai cho VinShop Demo, tại sao tài liệu này lại cần 'kết hợp với dữ liệu đơn hàng thực tế'?",
+    "agent_response": "Answer: Tài liệu trong hệ thống RAG cho VinShop Demo cần kết hợp với dữ liệu đơn hàng thực tế để đảm bảo câu trả lời được cá nhân hóa, chính xác và phản ánh đúng tình trạng giao dịch cụ thể của khách hàng. Ví dụ, khi khách hỏi về trạng thái đơn hàng, thời gian giao dự kiến hay lý do hoàn tiền, hệ thống phải tra cứu dữ liệu đơn hàng thực tế (như mã đơn, trạng thái xử lý, lịch sử giao nhận) thay vì chỉ dựa vào tài liệu hướng dẫn chung.\n\nEvidence:\n- Policy: Hệ thống hỗ trợ khách hàng cần cung cấp thông tin dựa trên ngữ cảnh giao dịch cụ thể của từng người dùng, không chỉ dựa vào tài liệu tĩnh [citation: internal_design_principle_01].\n- Order data: Dữ liệu đơn hàng thực tế bao gồm các trường như order_id, status, delivery_date, payment_status — là yếu tố then chốt để sinh ra phản hồi chính xác trong RAG [citation: rag_integration_spec_v2].",
+    "latency": 10.193727999983821,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Chính sách trong tài liệu áp dụng cho những đối tượng nào?",
+    "agent_response": "Answer: Chính sách trong tài liệu áp dụng cho khách hàng, nhà bán hàng, đơn vị vận chuyển và bộ phận chăm sóc khách hàng/vận hành sau bán trên nền tảng VinShop Demo.  \nEvidence:  \n- Policy: Chính sách áp dụng cho khách hàng mua sắm trên nền tảng VinShop Demo; đồng thời cũng áp dụng cho nhà bán hàng, đơn vị vận chuyển và bộ phận chăm sóc khách hàng/vận hành sau bán. (Trích từ mục \"2. Phạm vi áp dụng\")  \n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 10.69487669999944,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Liệu một nhà bán hàng không tham gia nền tảng VinShop Demo có thuộc phạm vi áp dụng của chính sách này không? Vì sao?",
+    "agent_response": "Answer: Nhà bán hàng không tham gia nền tảng VinShop Demo không thuộc phạm vi áp dụng của chính sách này.  \nEvidence:  \n- Policy: Chính sách chỉ áp dụng cho các nhà bán hàng đã tham gia nền tảng VinShop Demo, do đó những nhà bán hàng không tham gia không thuộc đối tượng được điều chỉnh bởi chính sách. (Trích từ mục \"2. Phạm vi áp dụng\")  \n- Order data: Không yêu cầu dữ liệu đơn hàng trong trường hợp này.",
+    "latency": 12.268179100006819,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Một khách hàng khiếu nại về chất lượng sản phẩm có được xử lý theo chính sách này không, dù vấn đề không liên quan đến giao hàng hay khuyến mãi?",
+    "agent_response": "Answer: Vâng, khiếu nại về chất lượng sản phẩm vẫn được xử lý theo chính sách nền tảng, ngay cả khi vấn đề không liên quan đến giao hàng hay khuyến mãi. Cụ thể, các trường hợp như hàng lỗi, hư hỏng, không đúng mô tả hoặc nghi ngờ hàng giả đều thuộc phạm vi được hỗ trợ trả hàng hoặc hoàn tiền.  \nEvidence:  \n- Policy: Khiếu nại về chất lượng sản phẩm (hàng lỗi, vỡ, hư hỏng, không đúng mô tả, sai thương hiệu hoặc nghi ngờ hàng giả) được bao gồm trong chính sách yêu cầu trả hàng/hoàn tiền, không giới hạn ở các vấn đề giao hàng hay khuyến mãi. (Nguồn: 3. Thuật ngữ > 3.3. Yêu cầu trả hàng / hoàn tiền)  \n- Order data: Không cần thiết cho câu hỏi này.",
+    "latency": 15.874016800022218,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Đơn hàng hợp lệ cần có những điều kiện gì theo tài liệu?",
+    "agent_response": "Answer: Đơn hàng hợp lệ là đơn được tạo thành công trên hệ thống, có mã đơn hàng rõ ràng, thông tin nhận hàng đầy đủ và không vi phạm quy định chống gian lận.  \nEvidence:  \n- Policy: Đơn hàng phải được tạo thành công trên hệ thống, có mã đơn hàng rõ ràng, thông tin nhận hàng đầy đủ và không vi phạm quy định chống gian lận (3. Thuật ngữ > 3.1. Đơn hàng hợp lệ)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này",
+    "latency": 12.153514000005089,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Một đơn hàng thiếu thông tin nhận hàng có được coi là hợp lệ không? Vì sao?",
+    "agent_response": "Answer: Đơn hàng thiếu thông tin nhận hàng không được coi là hợp lệ.  \nEvidence:  \n- Policy: Theo quy định, một đơn hàng hợp lệ phải có thông tin nhận hàng đầy đủ; thiếu thông tin này có thể dẫn đến việc giao hàng bị trì hoãn hoặc không thực hiện được [3. Thuật ngữ > 3.1. Đơn hàng hợp lệ].  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 10.112985400017351,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một đơn hàng có mã rõ ràng và thông tin nhận hàng đầy đủ nhưng bị nghi ngờ gian lận, nó có còn là đơn hàng hợp lệ không?",
+    "agent_response": "Status: not_found  \nMessage: Dạ em không tìm thấy quy định cụ thể trong tài liệu hiện hành về việc xác định tính hợp lệ của đơn hàng khi có đầy đủ thông tin nhưng bị nghi ngờ gian lận.",
+    "latency": 9.019563800015021,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 1.5,
+      "agreement_rate": 0.5,
+      "individual_scores": {
+        "judge_primary": 2,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Đơn hàng được coi là giao hàng thành công khi nào?",
+    "agent_response": "Answer: Đơn hàng được coi là giao hàng thành công khi hệ thống vận chuyển cập nhật trạng thái \"delivered\" (hoặc tương đương) và hàng hóa đã được giao tới đúng địa chỉ hoặc đúng người nhận được ủy quyền.  \nEvidence:  \n- Policy: Đơn được xem là giao hàng thành công khi hệ thống vận chuyển cập nhật trạng thái `delivered` hoặc tương đương, và hàng hóa phải được giao tới đúng địa chỉ hoặc đúng người nhận được ủy quyền. (Nguồn: 3. Thuật ngữ > 3.2. Giao hàng thành công)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 14.19894699996803,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.3333333333333333
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một đơn hàng được đánh dấu là 'delivered' trong hệ thống nhưng lại giao nhầm địa chỉ, liệu nó có được coi là giao hàng thành công không?",
+    "agent_response": "Answer: Một đơn hàng được đánh dấu là 'delivered' trong hệ thống nhưng lại giao nhầm địa chỉ sẽ **không** được coi là giao hàng thành công.  \nEvidence:  \n- Policy: Đơn được xem là giao hàng thành công khi hệ thống cập nhật trạng thái 'delivered' **và** hàng hóa đã tới đúng địa chỉ hoặc đúng người nhận được ủy quyền. Việc chỉ có trạng thái 'delivered' mà không đến đúng địa chỉ không đủ điều kiện để coi là giao hàng thành công. (Nguồn: 3. Thuật ngữ > 3.2. Giao hàng thành công)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho trường hợp này.",
+    "latency": 14.47234750003554,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Giả sử hệ thống vận chuyển dùng trạng thái 'completed' thay vì 'delivered' để báo hiệu việc giao hàng xong xuôi. Liệu điều này có đủ để coi là giao hàng thành công theo định nghĩa trong tài liệu không?",
+    "agent_response": "Answer: Nếu hệ thống vận chuyển sử dụng trạng thái 'completed' với ý nghĩa tương đương như 'delivered', thì điều này vẫn đủ để coi là giao hàng thành công theo định nghĩa trong tài liệu.  \nEvidence:  \n- Policy: Giao hàng thành công được định nghĩa là khi hệ thống vận chuyển cập nhật trạng thái `delivered` hoặc tương đương, và hàng đã đến đúng địa chỉ hoặc người nhận được ủy quyền. (Trích từ \"3. Thuật ngữ > 3.2. Giao hàng thành công\")  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể trong trường hợp này.",
+    "latency": 14.790209300001152,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Khách hàng có thể yêu cầu trả hàng hoặc hoàn tiền trong trường hợp nào?",
+    "agent_response": "Answer: Khách hàng có thể yêu cầu trả hàng hoặc hoàn tiền khi đơn hàng gặp các vấn đề như giao sai sản phẩm, thiếu hàng, hàng bị lỗi/hư hỏng/vỡ, hàng không đúng mô tả, nghi ngờ hàng giả hoặc sai thương hiệu, hoặc khi khách đổi ý (nếu vẫn còn trong thời hạn cho phép).  \nEvidence:  \n- Policy: Các trường hợp hợp lệ để yêu cầu trả hàng/hoàn tiền bao gồm: giao sai, thiếu hàng, hư hỏng, không đúng mô tả, hàng giả/sai thương hiệu, hoặc đổi ý (nếu còn trong thời hạn). (Nguồn: 3. Thuật ngữ > 3.3. Yêu cầu trả hàng / hoàn tiền)  \n- Order data: Không cần dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 13.137372599972878,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Việc khách hàng đổi ý sau khi nhận hàng có được coi là lý do hợp lệ để yêu cầu hoàn tiền không?",
+    "agent_response": "Answer: Việc khách hàng đổi ý sau khi nhận hàng có thể là lý do hợp lệ để yêu cầu hoàn tiền, nhưng không phải lúc nào cũng được chấp nhận. Yêu cầu này chỉ được xem xét nếu nằm trong phạm vi cho phép theo chính sách của nền tảng và đáp ứng các điều kiện cụ thể.\n\nEvidence:\n- Policy: Khách hàng đổi ý sau khi nhận hàng có thể là lý do hợp lệ để yêu cầu hoàn tiền, nhưng chỉ trong phạm vi cho phép theo chính sách. Cụ thể, chính sách ghi nhận “đơn đã giao nhưng khách có nhu cầu đổi ý trong phạm vi cho phép” là một trường hợp thuộc diện yêu cầu trả hàng/hoàn tiền. Tuy nhiên, việc đổi ý không tự động đảm bảo được hoàn tiền mà phải tuân theo các điều kiện và giới hạn được nền tảng quy định. (Nguồn: 3. Thuật ngữ > 3.3. Yêu cầu trả hàng / hoàn tiền)\n- Order data: Không cần thiết cho câu hỏi này.",
+    "latency": 15.921906700008549,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một khách hàng nhận được sản phẩm đúng mô tả, không hư hỏng và đúng thương hiệu, nhưng vẫn yêu cầu hoàn tiền vì không thích màu sắc, điều này có được chấp nhận không?",
+    "agent_response": "Status: not_found\nMessage: Dạ em không tìm thấy chính sách liên quan đến việc hoàn tiền do khách hàng không thích màu sắc sản phẩm.",
+    "latency": 7.428234999999404,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 2.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 2,
+        "judge_secondary": 2
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Voucher nền tảng là gì?",
+    "agent_response": "Answer: Voucher nền tảng là loại ưu đãi do VinShop Demo hoặc đối tác tài trợ, được áp dụng theo điều kiện cụ thể của từng chiến dịch.  \nEvidence:  \n- Policy: Voucher nền tảng là loại ưu đãi do VinShop Demo hoặc đối tác tài trợ và việc áp dụng tuân theo điều kiện của từng chiến dịch cụ thể. (Nguồn: 3. Thuật ngữ > 3.4. Voucher nền tảng)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 10.658243899990339,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Ai có thể tài trợ voucher nền tảng theo tài liệu?",
+    "agent_response": "Answer: Voucher nền tảng có thể được tài trợ bởi VinShop Demo hoặc các đối tác.  \nEvidence:  \n- Policy: Voucher nền tảng là ưu đãi do VinShop Demo hoặc đối tác tài trợ, áp dụng theo điều kiện từng chiến dịch. (Nguồn: 3. Thuật ngữ > 3.4. Voucher nền tảng)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 10.431850799999665,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Voucher nền tảng có thể được áp dụng mà không cần điều kiện từ chiến dịch không?",
+    "agent_response": "Answer: Voucher nền tảng không thể được áp dụng mà không có điều kiện từ chiến dịch, vì loại voucher này luôn đi kèm điều kiện sử dụng cụ thể do từng chiến dịch quy định.  \nEvidence:  \n- Policy: Voucher nền tảng là ưu đãi do VinShop Demo hoặc đối tác tài trợ, áp dụng theo điều kiện từng chiến dịch. (Nguồn: 3. Thuật ngữ > 3.4. Voucher nền tảng)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 10.447745000012219,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Voucher shop là gì?",
+    "agent_response": "Answer: Voucher shop là loại voucher do cửa hàng (shop) phát hành và chỉ áp dụng cho các đơn hàng được mua từ chính shop đó. Loại voucher này có thể được sử dụng đồng thời với voucher nền tảng và voucher vận chuyển, nhưng ưu đãi từ voucher shop sẽ được áp dụng trước theo thứ tự ưu tiên. Mỗi đơn hàng chỉ được dùng tối đa 1 voucher shop.\n\nEvidence:\n- Policy: Voucher shop là loại voucher do shop phát hành và chỉ áp dụng cho đơn hàng từ shop đó. Mỗi đơn hàng có thể sử dụng tối đa 1 voucher shop cùng với 1 voucher nền tảng và 1 voucher vận chuyển. (Nguồn: \"6. Chính sách voucher và khuyến mãi > 6.1. Các loại voucher trong hệ thống\", \"6. Chính sách voucher và khuyến mãi > 6.3. Quy tắc cộng dồn voucher\")\n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 16.390675600036047,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 4.5,
+      "agreement_rate": 0.5,
+      "individual_scores": {
+        "judge_primary": 4,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Ai là người phát hành voucher shop và phạm vi áp dụng của nó như thế nào?",
+    "agent_response": "Answer: Voucher shop là ưu đãi do nhà bán hàng phát hành và chỉ áp dụng cho sản phẩm hoặc gian hàng tương ứng.  \nEvidence:  \n- Policy: Voucher shop do nhà bán hàng phát hành và phạm vi áp dụng giới hạn trong gian hàng hoặc sản phẩm mà nhà bán hàng đó cung cấp. (Nguồn: 3. Thuật ngữ > 3.5. Voucher shop)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 11.499906999990344,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Liệu một voucher shop từ gian hàng A có thể được sử dụng để mua sản phẩm từ gian hàng B không? Vì sao?",
+    "agent_response": "Answer: Voucher shop từ gian hàng A không thể được sử dụng để mua sản phẩm từ gian hàng B vì voucher shop là ưu đãi do nhà bán hàng phát hành và chỉ áp dụng cho sản phẩm hoặc gian hàng tương ứng.  \nEvidence:  \n- Policy: Voucher shop là ưu đãi do nhà bán hàng phát hành và chỉ áp dụng cho sản phẩm hoặc gian hàng tương ứng (theo \"3. Thuật ngữ > 3.5. Voucher shop\").  \n- Order data: Không yêu cầu dữ liệu đơn hàng trong trường hợp này.",
+    "latency": 13.090213900024537,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Voucher vận chuyển là gì?",
+    "agent_response": "Answer: Voucher vận chuyển là mã giảm phí giao hàng, có thể dùng độc lập hoặc kết hợp với các loại voucher khác tùy theo điều kiện chương trình.  \nEvidence:  \n- Policy: Voucher vận chuyển là mã giảm phí giao hàng; có thể áp dụng độc lập hoặc kết hợp với các loại voucher khác tùy điều kiện chương trình. (Nguồn: 3. Thuật ngữ > 3.6. Voucher vận chuyển)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 11.114627800008748,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Voucher vận chuyển có thể được sử dụng cùng lúc với các loại voucher khác không?",
+    "agent_response": "Answer: Voucher vận chuyển có thể được sử dụng cùng lúc với các loại voucher khác, cụ thể là tối đa một voucher nền tảng, một voucher shop và một voucher vận chuyển trong cùng một đơn hàng. Tuy nhiên, hệ thống sẽ áp dụng các ưu đãi theo thứ tự ưu tiên: ưu đãi của shop trước, sau đó đến voucher nền tảng, và cuối cùng là voucher vận chuyển.  \nEvidence:  \n- Policy: Một đơn hàng có thể dùng tối đa 01 voucher nền tảng, 01 voucher shop và 01 voucher vận chuyển; hệ thống áp dụng ưu đãi theo thứ tự: ưu đãi shop → voucher nền tảng → voucher vận chuyển. (Nguồn: \"6. Chính sách voucher và khuyến mãi > 6.3. Quy tắc cộng dồn voucher\", \"3. Thuật ngữ > 3.6. Voucher vận chuyển\")  \n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 13.741879899986088,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một chương trình khuyến mãi không cho phép kết hợp voucher, liệu voucher vận chuyển vẫn có thể được áp dụng không?",
+    "agent_response": "Answer: Voucher vận chuyển vẫn có thể được áp dụng ngay cả khi chương trình khuyến mãi không cho phép kết hợp voucher, vì voucher vận chuyển được xử lý riêng biệt và áp dụng sau cùng theo quy định nền tảng.  \nEvidence:  \n- Policy: Mỗi đơn hàng có thể dùng đồng thời 01 voucher nền tảng, 01 voucher shop và 01 voucher vận chuyển. Voucher vận chuyển là loại mã giảm phí giao hàng có thể áp dụng độc lập hoặc kết hợp tùy điều kiện chương trình. (Trích từ: \"6. Chính sách voucher và khuyến mãi > 6.3. Quy tắc cộng dồn voucher\" và \"3. Thuật ngữ > 3.6. Voucher vận chuyển\")  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 14.888247599999886,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 3.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 3,
+        "judge_secondary": 3
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "VinShop Demo hỗ trợ những phương thức giao hàng nào?",
+    "agent_response": "Answer: VinShop Demo hỗ trợ bốn phương thức giao hàng: tiêu chuẩn (standard), giao nhanh (fast), giao ưu tiên (express) và giao theo lịch hẹn (scheduled). Tuy nhiên, không phải mọi sản phẩm đều hỗ trợ đầy đủ các phương thức này — hệ thống sẽ tự động hiển thị phương thức phù hợp dựa trên địa chỉ nhận hàng, đặc điểm gói hàng và điều kiện từ nhà bán.  \nEvidence:  \n- Policy: VinShop Demo hỗ trợ 4 phương thức giao hàng: standard, fast, express, scheduled. Phương thức khả dụng phụ thuộc vào địa chỉ, kích thước/khối lượng, điều kiện đóng gói và đặc thù sản phẩm. (Nguồn: \"4. Chính sách giao hàng > 4.1. Phương thức giao hàng\", \"4. Chính sách giao hàng > 4.4. Giao hàng nhanh và giao ưu tiên\")  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 15.538154100009706,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.3333333333333333
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Tại sao một sản phẩm cụ thể có thể không hiển thị đầy đủ các phương thức giao hàng trên VinShop Demo?",
+    "agent_response": "Answer: Một sản phẩm cụ thể có thể không hiển thị đầy đủ các phương thức giao hàng trên VinShop Demo vì hệ thống chỉ hiển thị những phương thức phù hợp dựa trên địa chỉ nhận hàng, kích thước và khối lượng gói hàng, điều kiện đóng gói của nhà bán, và đặc thù sản phẩm (như dễ vỡ, hàng giá trị cao, cồng kềnh hoặc cần bảo quản đặc biệt).  \nEvidence:  \n- Policy: Không phải mọi sản phẩm đều hỗ trợ tất cả phương thức giao hàng; hệ thống tự động lọc và hiển thị phương thức giao hàng phù hợp dựa trên nhiều yếu tố liên quan đến sản phẩm và địa chỉ giao hàng. [4. Chính sách giao hàng > 4.1. Phương thức giao hàng]  \n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 14.328454900009092,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.25
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một khách hàng ở Hà Nội đặt mua một chiếc đàn piano lớn, họ có thể chọn phương thức giao hàng 'express' không? Vì sao?",
+    "agent_response": "Status: not_found\nMessage: Dạ em không tìm thấy chính sách giao hàng liên quan đến phương thức 'express' cho mặt hàng đàn piano lớn.",
+    "latency": 8.23559249995742,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.3333333333333333
+      }
+    },
+    "judge": {
+      "final_score": 2.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 2,
+        "judge_secondary": 2
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Thời gian xử lý đơn tiêu chuẩn là bao lâu?",
+    "agent_response": "Answer: Thời gian xử lý đơn tiêu chuẩn là từ 4 đến 24 giờ làm việc sau khi khách đặt hàng thành công.  \nEvidence:  \n- Policy: Đơn tiêu chuẩn được xử lý trong khoảng từ 4 đến 24 giờ làm việc, bao gồm các bước: xác nhận tồn kho, đóng gói, in vận đơn và bàn giao cho đơn vị vận chuyển. (Nguồn: 4. Chính sách giao hàng > 4.2. Thời gian xử lý đơn)  \n- Order data: Không yêu cầu dữ liệu đơn cụ thể cho câu hỏi này.",
+    "latency": 10.965212099952623,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.3333333333333333
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Điều kiện để đơn giao nhanh được xử lý trong 1–6 giờ làm việc là gì?",
+    "agent_response": "Answer: Đơn giao nhanh được xử lý trong 1–6 giờ làm việc nếu được đặt trong khung giờ hỗ trợ.  \nEvidence:  \n- Policy: Thời gian xử lý đơn giao nhanh là từ 1 đến 6 giờ làm việc, và điều kiện để đạt thời gian xử lý này là đơn phải được đặt trong khung giờ hỗ trợ. (Nguồn: 4. Chính sách giao hàng > 4.2. Thời gian xử lý đơn)  \n- Order data: Không yêu cầu dữ liệu đơn cụ thể cho câu hỏi này.",
+    "latency": 10.72248449997278,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một đơn hàng bao gồm sản phẩm từ nhiều shop, liệu toàn bộ đơn có bắt buộc phải xử lý cùng lúc không?",
+    "agent_response": "Answer: Đơn hàng bao gồm sản phẩm từ nhiều shop không bắt buộc phải xử lý cùng lúc. Các sản phẩm có thể được tách thành nhiều gói và xử lý độc lập.  \nEvidence:  \n- Policy: Đơn hàng có nhiều sản phẩm từ nhiều shop có thể được tách thành nhiều gói và các gói này có thể được xử lý độc lập, không cần xử lý đồng thời. (Nguồn: 4. Chính sách giao hàng > 4.2. Thời gian xử lý đơn)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 11.160574100038502,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Thời gian giao hàng dự kiến cho đơn hàng nội thành cùng tỉnh/thành phố lớn là bao lâu?",
+    "agent_response": "Status: not_found  \nMessage: Dạ em không tìm thấy thông tin cụ thể về thời gian giao hàng dự kiến cho đơn hàng nội thành cùng tỉnh/thành phố lớn trong các tài liệu chính sách hiện có.",
+    "latency": 7.858985300001223,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 1.5,
+      "agreement_rate": 0.5,
+      "individual_scores": {
+        "judge_primary": 2,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Một đơn hàng được gửi từ Hà Nội đến một xã thuộc tỉnh Lào Cai (khu vực miền núi, xa trung tâm) và chứa sản phẩm cồng kềnh. Thời gian giao hàng dự kiến tối đa là bao nhiêu ngày?",
+    "agent_response": "Answer: Thời gian giao hàng dự kiến tối đa cho đơn hàng này là 10 ngày.  \nEvidence:  \n- Policy: Đơn hàng gửi đến xã thuộc tỉnh Lào Cai (khu vực miền núi, xa trung tâm) có thời gian giao dự kiến từ 3 đến 7 ngày; sản phẩm cồng kềnh được cộng thêm 1 đến 3 ngày. (Nguồn: 4. Chính sách giao hàng > 4.3. Thời gian giao hàng dự kiến)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể trong trường hợp này.",
+    "latency": 12.85196930001257,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu thời tiết xấu xảy ra trong quá trình vận chuyển, liệu thời gian giao hàng có thể thay đổi không?",
+    "agent_response": "Answer: Thời gian giao hàng có thể thay đổi nếu xảy ra thời tiết xấu, vì đây là một trong những yếu tố bất khả kháng mà hệ thống xem xét để điều chỉnh thời gian giao hàng dự kiến.  \nEvidence:  \n- Policy: Thời gian giao hàng hiển thị là thời gian dự kiến, không phải cam kết tuyệt đối; hệ thống có thể điều chỉnh nếu phát sinh các tình huống bất khả kháng như thời tiết xấu (4. Chính sách giao hàng > 4.3. Thời gian giao hàng dự kiến)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này",
+    "latency": 11.120908799988683,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Điều kiện nào sau đây KHÔNG cần thiết để đơn hàng đủ điều kiện giao nhanh?",
+    "agent_response": "Answer: Điều kiện KHÔNG cần thiết để đơn hàng đủ điều kiện giao nhanh bao gồm: thời gian xử lý đơn của shop, số lượng kiện hàng, hoặc phương thức thanh toán.  \nEvidence:  \n- Policy: Để đủ điều kiện giao nhanh, đơn hàng chỉ cần đáp ứng ba điều kiện: đặt trong khung giờ hệ thống hỗ trợ, địa chỉ nhận nằm trong vùng phục vụ, và sản phẩm không thuộc danh mục hạn chế vận chuyển. Các yếu tố như thời gian xử lý của shop, số lượng kiện, hay phương thức thanh toán không ảnh hưởng đến điều kiện giao nhanh. (Nguồn: 4. Chính sách giao hàng > 4.4. Giao hàng nhanh và giao ưu tiên)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 16.674278800026514,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.3333333333333333
+      }
+    },
+    "judge": {
+      "final_score": 1.5,
+      "agreement_rate": 0.5,
+      "individual_scores": {
+        "judge_primary": 2,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Những lý do nào có thể khiến một đơn giao nhanh bị chuyển sang giao tiêu chuẩn?",
+    "agent_response": "Answer: Một đơn giao nhanh có thể bị chuyển sang giao tiêu chuẩn trong các trường hợp sau: shop bàn giao hàng chậm, sản phẩm vượt ngưỡng kích thước hoặc khối lượng cho phép, hoặc phát sinh rủi ro vận hành từ đơn vị vận chuyển.  \nEvidence:  \n- Policy: Một đơn giao nhanh có thể bị chuyển sang giao tiêu chuẩn nếu shop bàn giao hàng chậm, sản phẩm vượt ngưỡng kích thước hoặc khối lượng cho phép, hoặc phát sinh rủi ro vận hành từ đơn vị vận chuyển. (Nguồn: 4. Chính sách giao hàng > 4.4. Giao hàng nhanh và giao ưu tiên)  \n- Order data: Không yêu cầu dữ liệu đơn cụ thể cho câu hỏi này.",
+    "latency": 11.873987300030421,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Địa chỉ nhận hàng có cần nằm trong vùng phục vụ để được giao nhanh không?",
+    "agent_response": "Answer: Địa chỉ nhận hàng phải nằm trong vùng phục vụ thì đơn hàng mới đủ điều kiện được giao nhanh.  \nEvidence:  \n- Policy: Đơn hàng muốn được giao nhanh phải đáp ứng điều kiện: địa chỉ nhận nằm trong vùng phục vụ. Ngoài ra, đơn hàng còn cần đặt trong khung giờ hệ thống hỗ trợ và sản phẩm không thuộc danh mục hạn chế vận chuyển. (Nguồn: 4. Chính sách giao hàng > 4.4. Giao hàng nhanh và giao ưu tiên)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 12.252885000023525,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Khi nào một đơn hàng có thể bị tách thành nhiều kiện?",
+    "agent_response": "Answer: Một đơn hàng có thể bị tách thành nhiều kiện trong các trường hợp sau: khi sản phẩm trong đơn đến từ nhiều nhà bán khác nhau, khi các mặt hàng được lưu trữ ở nhiều kho khác nhau, hoặc khi một phần hàng đã sẵn sàng giao trong khi phần còn lại cần thêm thời gian xử lý.  \nEvidence:  \n- Policy: Đơn hàng có thể bị tách khi có sản phẩm từ nhiều nhà bán khác nhau; khi các mặt hàng nằm ở nhiều kho khác nhau; hoặc khi một phần hàng sẵn kho và phần còn lại cần xử lý riêng. (Nguồn: 4. Chính sách giao hàng > 4.5. Tách đơn và giao nhiều kiện)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 16.907995699963067,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một đơn hàng được giao thành hai kiện với hai mã vận đơn khác nhau, liệu thời gian giao hàng của hai kiện này có nhất thiết phải giống nhau không?",
+    "agent_response": "Answer: Khi một đơn hàng được giao thành hai kiện với hai mã vận đơn khác nhau, thời gian giao hàng của từng kiện có thể khác nhau.  \nEvidence:  \n- Policy: Một đơn hàng có thể được tách thành nhiều kiện do nhiều lý do như sản phẩm từ nhiều nhà bán, hàng ở nhiều kho, hoặc có phần hàng cần xử lý riêng. Mỗi kiện có thể có mã vận đơn riêng và thời gian giao của từng kiện có thể khác nhau. (Nguồn: 4. Chính sách giao hàng > 4.5. Tách đơn và giao nhiều kiện)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 13.858654199982993,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Giả sử bạn đặt một đơn hàng gồm ba sản phẩm từ cùng một nhà bán, nhưng hai sản phẩm được giao trước và một sản phẩm giao sau do hết hàng. Điều này có mâu thuẫn với chính sách tách đơn không?",
+    "agent_response": "Answer: Việc một đơn hàng gồm ba sản phẩm từ cùng một nhà bán được giao thành hai đợt — trong đó hai sản phẩm giao trước và một sản phẩm giao sau do hết hàng — không mâu thuẫn với chính sách tách đơn.  \nEvidence:  \n- Policy: Chính sách cho phép tách đơn khi một phần hàng sẵn kho và phần còn lại cần xử lý riêng; mỗi kiện có thể có thời gian giao và mã vận đơn khác nhau (theo “4. Chính sách giao hàng > 4.5. Tách đơn và giao nhiều kiện” và “4. Chính sách giao hàng > 4.2. Thời gian xử lý đơn”).  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể vì câu hỏi mang tính giả định và đã được giải quyết bằng chính sách.",
+    "latency": 16.630593300040346,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Khách hàng nên làm gì khi nhận được sản phẩm giá trị cao theo chính sách giao hàng?",
+    "agent_response": "Answer: Khi nhận được sản phẩm giá trị cao, khách hàng nên kiểm tra tình trạng thùng hàng và quay video quá trình mở kiện để làm bằng chứng trong trường hợp có sự cố. Nếu phát hiện bất thường như vỡ, móp, thiếu phụ kiện hoặc nhận sai sản phẩm, khách hàng cần báo ngay trên ứng dụng.\n\nEvidence:\n- Policy: Khách hàng được khuyến nghị kiểm tra tình trạng thùng hàng khi nhận, quay video mở kiện đối với sản phẩm giá trị cao, và báo ngay trên ứng dụng nếu có hư hỏng, thiếu hụt hoặc sai sản phẩm (trích từ \"4. Chính sách giao hàng > 4.6. Kiểm hàng khi nhận\").\n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 14.516742900013924,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Theo chính sách, việc lắp đặt hoặc kích hoạt sản phẩm có được coi là một phần của 'kiểm hàng tại chỗ' không?",
+    "agent_response": "Answer: Theo chính sách, việc lắp đặt hoặc kích hoạt sản phẩm **không được coi** là một phần của \"kiểm hàng tại chỗ\". Kiểm hàng tại chỗ chỉ bao gồm việc kiểm tra ngoại quan gói hàng như tình trạng thùng, phụ kiện hoặc xác nhận đúng sản phẩm trước khi xác nhận nhận hàng.  \n\nEvidence:  \n- Policy: Kiểm hàng tại chỗ không bao gồm dùng thử sâu, lắp đặt, kích hoạt hoặc sử dụng lâu dài; chỉ giới hạn ở kiểm tra ngoại quan trước khi xác nhận nhận hàng (theo mục 4. Chính sách giao hàng > 4.6. Kiểm hàng khi nhận).  \n- Order data: Không yêu cầu dữ liệu đơn hàng cho câu hỏi này.",
+    "latency": 15.294920299958903,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một khách hàng phát hiện thiếu phụ kiện sau khi đã sử dụng sản phẩm trong 2 ngày, họ có còn được hỗ trợ theo chính sách kiểm hàng khi nhận không?",
+    "agent_response": "Status: not_found\nMessage: Dạ, theo chính sách hiện hành, việc kiểm hàng khi nhận chỉ áp dụng tại thời điểm giao hàng và yêu cầu khách báo ngay nếu phát hiện thiếu phụ kiện. Trường hợp đã sử dụng sản phẩm trong 2 ngày thì vượt quá phạm vi \"kiểm hàng tại chỗ\", và hiện không có quy định cụ thể hỗ trợ cho tình huống này.",
+    "latency": 10.036948700028006,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Đơn hàng có thể bị đánh dấu là 'delivery_failed' trong trường hợp nào?",
+    "agent_response": "Answer: Đơn hàng có thể bị đánh dấu là 'delivery_failed' khi xảy ra một trong các tình huống sau: người nhận không nghe máy sau nhiều lần liên hệ, địa chỉ giao không chính xác, người nhận hẹn giao lại quá số lần cho phép, khách từ chối nhận hàng mà không có lý do hợp lý, hoặc khu vực giao hàng đang bị hạn chế.  \nEvidence:  \n- Policy: Đơn hàng có thể bị đánh dấu là 'delivery_failed' trong các trường hợp: người nhận không nghe máy sau nhiều lần liên hệ, địa chỉ giao không chính xác, người nhận hẹn lại nhiều lần vượt quá ngưỡng hỗ trợ, khách từ chối nhận hàng không có lý do phù hợp, hoặc khu vực giao hàng tạm thời bị hạn chế. (Nguồn: 4. Chính sách giao hàng > 4.7. Giao hàng không thành công)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 13.829394100001082,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Sau khi giao hàng không thành công, hệ thống có thể thực hiện những hành động nào?",
+    "agent_response": "Answer: Sau khi giao hàng không thành công, hệ thống có thể thực hiện một trong các hành động sau: tự động lên lịch giao lại, chuyển hoàn hàng về kho hoặc shop, hoặc hủy đơn — tùy thuộc vào trạng thái thanh toán và điều kiện vận hành.  \nEvidence:  \n- Policy: Hệ thống có thể tự động lên lịch giao lại, chuyển hoàn hàng về kho/shop, hoặc hủy đơn tùy theo trạng thái thanh toán và điều kiện vận hành. (4. Chính sách giao hàng > 4.7. Giao hàng không thành công)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 12.127605200046673,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.3333333333333333
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một khách hàng liên tục hẹn giao lại hàng nhưng vẫn không nhận được hàng, liệu đơn hàng có chắc chắn bị hủy không?",
+    "agent_response": "Answer: Nếu khách hàng liên tục hẹn giao lại hàng vượt quá ngưỡng hỗ trợ, đơn hàng có thể bị hủy, nhưng không phải chắc chắn bị hủy. Việc xử lý đơn hàng trong trường hợp này phụ thuộc vào trạng thái thanh toán và điều kiện vận hành — hệ thống có thể chọn giao lại, chuyển hoàn về kho/shop, hoặc hủy đơn.  \nEvidence:  \n- Policy: Đơn hàng có thể bị đánh dấu giao hàng không thành công nếu người nhận hẹn lại nhiều lần vượt quá ngưỡng hỗ trợ; khi đó, hệ thống có thể tự động lên lịch giao lại, chuyển hoàn về kho/shop, hoặc hủy đơn tùy theo trạng thái thanh toán và điều kiện vận hành. (Nguồn: 4. Chính sách giao hàng > 4.7. Giao hàng không thành công)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 17.403877699980512,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Thời hạn đổi trả mặc định cho hàng tiêu dùng nhanh là bao lâu?",
+    "agent_response": "Answer: Thời hạn đổi trả mặc định cho hàng tiêu dùng nhanh là tối đa 3 ngày kể từ khi đơn hàng được cập nhật giao thành công.  \nEvidence:  \n- Policy: Hàng tiêu dùng nhanh thuộc nhóm sản phẩm có thời hạn đổi trả ngắn do rủi ro vệ sinh cao; thời hạn đổi trả mặc định là 3 ngày kể từ khi đơn giao thành công, trừ khi có quy định riêng trên dữ liệu sản phẩm hoặc đơn hàng. (Nguồn: 5. Chính sách đổi trả và hoàn tiền > 5.1. Điều kiện chung để gửi yêu cầu)  \n- Order data: Không cần thiết cho câu hỏi này.",
+    "latency": 11.136157800036017,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một sản phẩm có trường `return_window_days` được thiết lập là 10, thì thời hạn đổi trả của sản phẩm đó sẽ được tính như thế nào?",
+    "agent_response": "Status: not_found\nMessage: Dạ em không tìm thấy thông tin cụ thể trong tài liệu chính sách về cách tính thời hạn đổi trả dựa trên trường `return_window_days`.",
+    "latency": 8.22871060000034,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 1.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 1,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Một khách hàng mua thực phẩm vào thứ Hai và nhận được xác nhận giao hàng thành công vào sáng thứ Ba. Đến sáng thứ Sáu cùng tuần, họ yêu cầu hoàn tiền. Yêu cầu này có hợp lệ không theo chính sách đổi trả?",
+    "agent_response": "Status: not_found\nMessage: Dạ em không tìm thấy chính sách đổi trả áp dụng cho trường hợp này.",
+    "latency": 8.288734000001568,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 1.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 1,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Theo chính sách đổi trả, trường hợp nào sau đây được chấp nhận đổi trả do lỗi từ phía người bán?",
+    "agent_response": "Answer: Theo chính sách đổi trả, các trường hợp được chấp nhận đổi trả do lỗi từ phía người bán bao gồm: sản phẩm bị hư hỏng do vận chuyển (như bể, vỡ, móp, rách), lỗi kỹ thuật, giao sai (phân loại, màu, kích cỡ, mẫu), thiếu phụ kiện/quà tặng/số lượng, sản phẩm không đúng mô tả quan trọng trên trang bán, hoặc nghi ngờ hàng giả/nhái/sai xuất xứ.  \nEvidence:  \n- Policy: Các trường hợp đổi trả do lỗi người bán gồm: hư hỏng do vận chuyển, lỗi kỹ thuật, giao sai, thiếu phụ kiện/quà tặng/số lượng, không đúng mô tả quan trọng, nghi ngờ hàng giả/nhái/sai xuất xứ [5. Chính sách đổi trả và hoàn tiền > 5.2. Các lý do được chấp nhận]  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 18.045212499971967,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.25
+      }
+    },
+    "judge": {
+      "final_score": 4.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 4,
+        "judge_secondary": 4
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Nếu một khách hàng nhận được sản phẩm bị vỡ và đồng thời thiếu phụ kiện đi kèm, yêu cầu đổi trả của họ có được chấp nhận không? Vì sao?",
+    "agent_response": "Answer: Yêu cầu đổi trả của khách hàng sẽ được chấp nhận vì sản phẩm bị vỡ và thiếu phụ kiện đều là những lý do thuộc diện được hỗ trợ theo chính sách đổi trả.  \nEvidence:  \n- Policy: Sản phẩm bị vỡ do vận chuyển và thiếu phụ kiện đi kèm đều là các lý do hợp lệ để đổi trả hoặc hoàn tiền (theo mục 5.2 trong Chính sách đổi trả và hoàn tiền).  \n- Order data: Không cần dữ liệu đơn hàng cụ thể vì câu hỏi mang tính chung và đã đủ thông tin từ chính sách.",
+    "latency": 14.750009599956684,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Một khách hàng mua điện thoại nhưng sau 10 ngày mới phát hiện máy không có tính năng chống nước như mô tả trên trang bán. Tuy nhiên, ngành hàng điện tử chỉ cho phép đổi trả trong vòng 7 ngày nếu 'đổi ý'. Hỏi: khách có thể yêu cầu đổi trả không?",
+    "agent_response": "Status: not_found\nMessage: Dạ em không tìm thấy chính sách liên quan đến trường hợp sản phẩm không đúng như mô tả để hỗ trợ anh/chị. Anh/chị vui lòng liên hệ bộ phận chăm sóc khách hàng để được hỗ trợ thêm.",
+    "latency": 9.040484700002708,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 1.5,
+      "agreement_rate": 0.5,
+      "individual_scores": {
+        "judge_primary": 2,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Theo chính sách đổi trả, sản phẩm nào sau đây KHÔNG được hỗ trợ trả hàng?",
+    "agent_response": "Status: not_found\nMessage: Dạ em không tìm thấy thông tin chính sách đổi trả liên quan đến câu hỏi này. Anh/chị vui lòng cung cấp thêm chi tiết hoặc kiểm tra lại nội dung cần hỗ trợ ạ.",
+    "latency": 8.931840000033844,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 1.5,
+      "agreement_rate": 0.5,
+      "individual_scores": {
+        "judge_primary": 2,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Một khách hàng mua phần mềm diệt virus dưới dạng mã kích hoạt điện tử và yêu cầu hoàn tiền sau khi đã nhập mã. Liệu yêu cầu này có được chấp nhận theo chính sách không hỗ trợ trả hàng không? Vì sao?",
+    "agent_response": "Status: not_found\nMessage: Dạ em không tìm thấy chính sách liên quan đến việc hoàn tiền cho phần mềm diệt virus dạng mã kích hoạt điện tử sau khi đã nhập mã.",
+    "latency": 8.030414999986533,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 1.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 1,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Giả sử một khách hàng gửi trả lại máy xay sinh tố bị vỡ cối do tự ý tháo rời và lắp sai cách, nhưng kèm đầy đủ phụ kiện và hóa đơn. Theo tài liệu, cửa hàng có bắt buộc phải từ chối hoàn tiền không?",
+    "agent_response": "Status: not_found\nMessage: Dạ em không tìm thấy chính sách liên quan đến việc xử lý hoàn tiền cho sản phẩm bị hư hỏng do khách hàng tự ý tháo rời và lắp sai cách.",
+    "latency": 8.618801700009499,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 1.5,
+      "agreement_rate": 0.5,
+      "individual_scores": {
+        "judge_primary": 2,
+        "judge_secondary": 1
+      }
+    },
+    "status": "fail"
+  },
+  {
+    "test_case": "Khách hàng cần cung cấp những loại bằng chứng nào khi yêu cầu trả hàng hoặc hoàn tiền?",
+    "agent_response": "Answer: Khi yêu cầu trả hàng hoặc hoàn tiền, khách hàng cần cung cấp các bằng chứng sau: ảnh kiện hàng còn nguyên tem vận chuyển, video mở kiện (nếu có), ảnh sản phẩm lỗi/hư hỏng, ảnh tem serial/mã vạch/phụ kiện đi kèm, và một mô tả ngắn gọn về vấn đề gặp phải. Việc cung cấp đầy đủ bằng chứng giúp đảm bảo yêu cầu được xử lý nhanh chóng; nếu không, yêu cầu có thể bị từ chối hoặc kéo dài thời gian xử lý.  \nEvidence:  \n- Policy: Khách hàng cần cung cấp ảnh kiện hàng còn nguyên tem vận chuyển, video mở kiện, ảnh sản phẩm lỗi/hư hỏng, ảnh tem serial/mã vạch/phụ kiện và mô tả ngắn gọn vấn đề. Nếu bằng chứng chưa đủ, yêu cầu có thể bị từ chối hoặc xử lý chậm. (Trích từ: 5. Chính sách đổi trả và hoàn tiền > 5.4. Bằng chứng cần cung cấp)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 17.568046100030188,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 0.0,
+        "mrr": 0.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Điều gì có thể xảy ra nếu bằng chứng khách hàng cung cấp chưa đủ rõ ràng theo chính sách đổi trả?",
+    "agent_response": "Answer: Nếu bằng chứng khách hàng cung cấp trong yêu cầu đổi trả chưa đủ rõ ràng, hệ thống có thể yêu cầu bổ sung thông tin, kéo dài thời gian xử lý hoặc từ chối yêu cầu nếu không có đủ căn cứ.  \nEvidence:  \n- Policy: Khách hàng nên cung cấp đầy đủ bằng chứng như ảnh kiện hàng, video mở kiện, ảnh sản phẩm lỗi, tem serial và mô tả vấn đề; khi bằng chứng chưa đủ rõ, yêu cầu có thể bị từ chối, bị yêu cầu bổ sung hoặc xử lý chậm hơn. (Nguồn: 5. Chính sách đổi trả và hoàn tiền > 5.4. Bằng chứng cần cung cấp)  \n- Order data: Không yêu cầu dữ liệu đơn hàng cụ thể cho câu hỏi này.",
+    "latency": 16.115022299985867,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  },
+  {
+    "test_case": "Giả sử một khách hàng chỉ gửi ảnh sản phẩm lỗi nhưng không cung cấp ảnh kiện hàng nguyên tem vận chuyển hay mô tả vấn đề—yêu cầu hoàn tiền của họ có khả năng được chấp thuận không? Vì sao?",
+    "agent_response": "Answer: Yêu cầu hoàn tiền của khách hàng có khả năng bị từ chối nếu chỉ gửi ảnh sản phẩm lỗi mà không cung cấp ảnh kiện hàng nguyên tem vận chuyển và mô tả vấn đề, vì chính sách yêu cầu đầy đủ bằng chứng để xác minh tình trạng đơn hàng.  \nEvidence:  \n- Policy: Khách hàng cần cung cấp ảnh kiện hàng còn nguyên tem vận chuyển, ảnh sản phẩm lỗi, và mô tả ngắn gọn vấn đề khi gửi yêu cầu hoàn tiền. Nếu bằng chứng chưa đủ rõ, hệ thống có thể yêu cầu bổ sung, kéo dài thời gian xử lý, hoặc từ chối yêu cầu do thiếu căn cứ. (Nguồn: 5. Chính sách đổi trả và hoàn tiền > 5.4. Bằng chứng cần cung cấp)  \n- Order data: Không áp dụng (không có dữ liệu đơn hàng cụ thể được cung cấp).",
+    "latency": 14.4623591999989,
+    "ragas": {
+      "faithfulness": 0.9,
+      "relevancy": 0.8,
+      "retrieval": {
+        "hit_rate": 1.0,
+        "mrr": 0.5
+      }
+    },
+    "judge": {
+      "final_score": 5.0,
+      "agreement_rate": 1.0,
+      "individual_scores": {
+        "judge_primary": 5,
+        "judge_secondary": 5
+      }
+    },
+    "status": "pass"
+  }
+]
