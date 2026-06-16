@@ -132,9 +132,7 @@ with tab2:
         with st.spinner("Đang sinh dữ liệu từ RAG context... Việc này có thể mất vài phút."):
             import data.synthetic_gen as sgen
             try:
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                loop.run_until_complete(sgen.main())
+                asyncio.run(sgen.main())
                 st.success("✅ Đã sinh thành công dữ liệu và lưu vào `data/golden_set.jsonl`")
             except Exception as e:
                 st.error(f"Lỗi: {e}")
@@ -160,9 +158,7 @@ with tab3:
             with st.spinner("Đang chạy Benchmark Factory..."):
                 import main as bench_main
                 try:
-                    loop = asyncio.new_event_loop()
-                    asyncio.set_event_loop(loop)
-                    loop.run_until_complete(bench_main.main())
+                    asyncio.run(bench_main.main())
                     st.success("✅ Đánh giá hoàn tất!")
                 except Exception as e:
                     st.error(f"Lỗi Benchmark: {e}")

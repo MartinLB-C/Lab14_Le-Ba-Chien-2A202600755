@@ -12,23 +12,25 @@ if str(src_dir) not in sys.path:
 
 from langchain_core.messages import HumanMessage
 from app.config import Settings
-from provider.custom import build_custom_model
+from provider import get_chat_model
 from provider.gemini import build_gemini_model
 
 class LLMJudge:
     def __init__(self):
         self.settings = Settings.load()
         
-        # Primary judge (from .env LLM_PROVIDER, mostly Custom Qwen)
+        # Primary judge (from .env LLM_PROVIDER)
         try:
-            self.judge_primary = build_custom_model(self.settings)
+            self.judge_primary = get_chat_model(self.settings)
         except Exception as e:
             print(f"Warning: Primary judge init failed: {e}")
             self.judge_primary = None
             
         # Secondary judge (Gemini)
         try:
-            self.judge_secondary = build_gemini_model(self.settings)
+            from dataclasses import replace
+            gemini_settings = replace(self.settings, model="gemini-3.1-flash-lite")
+            self.judge_secondary = build_gemini_model(gemini_settings)
         except Exception as e:
             print(f"Warning: Secondary judge init failed (maybe missing GOOGLE_API_KEY?): {e}")
             # If Gemini fails, fallback to primary or None
@@ -60,9 +62,12 @@ Không giải thích gì thêm, hãy trả về theo định dạng JSON như sa
             answer=answer
         )
         try:
-            loop = asyncio.get_event_loop()
-            res = await loop.run_in_executor(None, lambda: model.invoke([HumanMessage(content=prompt)]))
+            res = await model.ainvoke([HumanMessage(content=prompt)])
             content = res.content
+            if isinstance(content, list):
+                content = " ".join([c.get("text", "") if isinstance(c, dict) else str(c) for c in content])
+            elif not isinstance(content, str):
+                content = str(content)
             # Extract JSON
             import json
             json_match = re.search(r'\{.*\}', content, re.DOTALL)

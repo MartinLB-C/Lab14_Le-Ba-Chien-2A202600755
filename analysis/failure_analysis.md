@@ -1,31 +1,60 @@
 # Báo cáo Phân tích Thất bại (Failure Analysis Report)
 
-## 1. Tổng quan Benchmark
-- **Tổng số cases:** 50
-- **Tỉ lệ Pass/Fail:** X/Y
-- **Điểm RAGAS trung bình:**
-    - Faithfulness: 0.XX
-    - Relevancy: 0.XX
-- **Điểm LLM-Judge trung bình:** X.X / 5.0
+- **Tổng số cases:** 57
+- **Tỉ lệ Fail:** 13/57
+- **Điểm LLM-Judge trung bình:** 4.14 / 5.0
+- **Hit Rate trung bình:** 0.75
 
 ## 2. Phân nhóm lỗi (Failure Clustering)
-| Nhóm lỗi | Số lượng | Nguyên nhân dự kiến |
-|----------|----------|---------------------|
-| Hallucination | 5 | Retriever lấy sai context |
-| Incomplete | 3 | Prompt quá ngắn, không yêu cầu chi tiết |
-| Tone Mismatch | 2 | Agent trả lời quá suồng sã |
+- **Case:** Tài liệu này được tạo ra nhằm mục đích gì?
+  - **Score:** 2.5
+  - **Individual:** {'judge_primary': 3, 'judge_secondary': 2}
 
-## 3. Phân tích 5 Whys (Chọn 3 case tệ nhất)
+- **Case:** Loại câu hỏi nào sau đây KHÔNG được đề cập trong ví dụ của tài liệu?
+  - **Score:** 1.0
+  - **Individual:** {'judge_primary': 1, 'judge_secondary': 1}
 
-### Case #1: [Mô tả ngắn]
-1. **Symptom:** Agent trả lời sai về...
-2. **Why 1:** LLM không thấy thông tin trong context.
-3. **Why 2:** Vector DB không tìm thấy tài liệu liên quan nhất.
-4. **Why 3:** Chunking size quá lớn làm loãng thông tin quan trọng.
-5. **Why 4:** ...
-6. **Root Cause:** Chiến lược Chunking không phù hợp với dữ liệu bảng biểu.
+- **Case:** Nếu một đơn hàng có mã rõ ràng và thông tin nhận hàng đầy đủ nhưng bị nghi ngờ gian lận, nó có còn là đơn hàng hợp lệ không?
+  - **Score:** 1.5
+  - **Individual:** {'judge_primary': 2, 'judge_secondary': 1}
 
-## 4. Kế hoạch cải tiến (Action Plan)
-- [ ] Thay đổi Chunking strategy từ Fixed-size sang Semantic Chunking.
-- [ ] Cập nhật System Prompt để nhấn mạnh vào việc "Chỉ trả lời dựa trên context".
-- [ ] Thêm bước Reranking vào Pipeline.
+- **Case:** Nếu một khách hàng nhận được sản phẩm đúng mô tả, không hư hỏng và đúng thương hiệu, nhưng vẫn yêu cầu hoàn tiền vì không thích màu sắc, điều này có được chấp nhận không?
+  - **Score:** 2.0
+  - **Individual:** {'judge_primary': 2, 'judge_secondary': 2}
+
+- **Case:** Nếu một khách hàng ở Hà Nội đặt mua một chiếc đàn piano lớn, họ có thể chọn phương thức giao hàng 'express' không? Vì sao?
+  - **Score:** 2.0
+  - **Individual:** {'judge_primary': 2, 'judge_secondary': 2}
+
+- **Case:** Thời gian giao hàng dự kiến cho đơn hàng nội thành cùng tỉnh/thành phố lớn là bao lâu?
+  - **Score:** 1.5
+  - **Individual:** {'judge_primary': 2, 'judge_secondary': 1}
+
+- **Case:** Điều kiện nào sau đây KHÔNG cần thiết để đơn hàng đủ điều kiện giao nhanh?
+  - **Score:** 1.5
+  - **Individual:** {'judge_primary': 2, 'judge_secondary': 1}
+
+- **Case:** Nếu một sản phẩm có trường `return_window_days` được thiết lập là 10, thì thời hạn đổi trả của sản phẩm đó sẽ được tính như thế nào?
+  - **Score:** 1.0
+  - **Individual:** {'judge_primary': 1, 'judge_secondary': 1}
+
+- **Case:** Một khách hàng mua thực phẩm vào thứ Hai và nhận được xác nhận giao hàng thành công vào sáng thứ Ba. Đến sáng thứ Sáu cùng tuần, họ yêu cầu hoàn tiền. Yêu cầu này có hợp lệ không theo chính sách đổi trả?
+  - **Score:** 1.0
+  - **Individual:** {'judge_primary': 1, 'judge_secondary': 1}
+
+- **Case:** Một khách hàng mua điện thoại nhưng sau 10 ngày mới phát hiện máy không có tính năng chống nước như mô tả trên trang bán. Tuy nhiên, ngành hàng điện tử chỉ cho phép đổi trả trong vòng 7 ngày nếu 'đổi ý'. Hỏi: khách có thể yêu cầu đổi trả không?
+  - **Score:** 1.5
+  - **Individual:** {'judge_primary': 2, 'judge_secondary': 1}
+
+- **Case:** Theo chính sách đổi trả, sản phẩm nào sau đây KHÔNG được hỗ trợ trả hàng?
+  - **Score:** 1.5
+  - **Individual:** {'judge_primary': 2, 'judge_secondary': 1}
+
+- **Case:** Một khách hàng mua phần mềm diệt virus dưới dạng mã kích hoạt điện tử và yêu cầu hoàn tiền sau khi đã nhập mã. Liệu yêu cầu này có được chấp nhận theo chính sách không hỗ trợ trả hàng không? Vì sao?
+  - **Score:** 1.0
+  - **Individual:** {'judge_primary': 1, 'judge_secondary': 1}
+
+- **Case:** Giả sử một khách hàng gửi trả lại máy xay sinh tố bị vỡ cối do tự ý tháo rời và lắp sai cách, nhưng kèm đầy đủ phụ kiện và hóa đơn. Theo tài liệu, cửa hàng có bắt buộc phải từ chối hoàn tiền không?
+  - **Score:** 1.5
+  - **Individual:** {'judge_primary': 2, 'judge_secondary': 1}
+
