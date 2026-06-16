@@ -1,0 +1,47 @@
+# AI Coding Rules and Guidelines for Day 09 Multi-Agents Project
+
+You are an expert AI coding assistant. Follow these project-specific rules and guidelines at all times when writing, refactoring, or reviewing code in this workspace.
+
+## Project Context
+- **Goal**: Build a Vietnamese Shopping Assistant using a Multi-Agent architecture orchestrated via **LangGraph**.
+- **Tech Stack**: Python, LangGraph, Chroma DB, SentenceTransformers (`all-MiniLM-L6-v2`), and LLM Provider abstraction.
+
+## Core Rules
+
+### 1. Code Style and Maintainability
+- Keep comments and docstrings in Vietnamese (or English if matching existing code).
+- Keep existing code structures intact. Do not delete or rewrite code in `src/provider/` unless explicitly requested.
+- Maintain clean, modular functions. Avoid giant monolithic files.
+- Keep prompts separated in [src/app/prompts.py](file:///d:/Vin_GD1/day9/Day09_Le-Ba-Chien-2A202600755/Day09_Le-Ba-Chien-2A202600755/src/app/prompts.py).
+
+### 2. Multi-Agent Architecture (LangGraph)
+- **Supervisor Agent**: Must parse user questions and route to either the Policy Worker, Data Worker, or both.
+- **Worker 1 (Policy / RAG)**: Must run RAG search on `policy_mock_vi.md` using Chroma.
+- **Worker 2 (Order / Customer Lookup)**: Must use specialized tools for data retrieval.
+- **Worker 3 (Response)**: Must synthesize the final answer, ensuring exact formatting (Success, Clarification, or Not Found).
+
+### 3. Tool Constraints (CRITICAL)
+- **Do NOT** combine all lookups into one generic tool. Implement at least 4 distinct, highly focused tools:
+  - `get_customer_by_id(customer_id)`
+  - `get_orders_by_customer_id(customer_id)`
+  - `get_order_detail_by_order_id(order_id)`
+  - `get_vouchers_by_customer_id(customer_id)`
+- Each tool should return structured JSON containing a status (e.g. `"ok"`, `"not_found"`).
+
+### 4. RAG and Chunking Strategy
+- Parse `policy_mock_vi.md` using a strict structural hierarchy:
+  - Identify `H2` headers (e.g., `## 5. Chính sách đổi trả và hoàn tiền`).
+  - Identify `H3` subheaders (e.g., `### 5.1. Điều kiện chung`).
+  - Retrieve the full text content under `H3`.
+- Each chunk should include: `section_h2`, `section_h3`, `citation`, and `rendered_text`.
+- Vector embeddings must use `sentence-transformers/all-MiniLM-L6-v2` and be indexed in `Chroma`.
+- Search queries must return matching chunks containing `citation` and `content`.
+
+### 5. Error and Case Handling
+- **Clarification Needed**: If a user asks a data-specific question (e.g. about order status, voucher availability) but does not provide their identifier (`customer_id` or `order_id`), the Supervisor/Response agent must route to a state that returns a clarification request rather than inventing or failing.
+- **Not Found**: If a query returns no matches in the databases (e.g., order `9999`), properly propagate the `not_found` status to the Response agent to return a polite not-found message.
+
+### 6. Testing and Debugging
+- Save step-by-step trace JSON for every query/batch run for auditability.
+- Run tests via `PYTHONPATH=src python -m app.cli`.
+- Support batch testing using `data/test.json`.
