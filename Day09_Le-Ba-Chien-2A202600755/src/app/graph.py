@@ -29,10 +29,10 @@ class ShoppingAssistant:
 
         # Load models and store
         self.llm = get_chat_model(self.settings)
-        self.data_store = ShoppingDataStore(Path("data/order_customer_mock_data.json"))
+        self.data_store = ShoppingDataStore(self.settings.orders_path)
         self.data_tools = build_data_tools(self.data_store)
         self.embedding_model = SentenceTransformerEmbeddings("sentence-transformers/all-MiniLM-L6-v2")
-        self.policy_store = ChromaPolicyStore(Path("data/chroma"), self.embedding_model)
+        self.policy_store = ChromaPolicyStore(self.settings.chroma_dir, self.embedding_model)
 
         # Define policy search tool
         @tool
@@ -182,9 +182,9 @@ class ShoppingAssistant:
         rebuild_index: bool = False,
     ) -> dict[str, Any]:
         if rebuild_index:
-            self.policy_store.rebuild(Path("data/policy_mock_vi.md"))
+            self.policy_store.rebuild(self.settings.policy_path)
         else:
-            self.policy_store.ensure_index(Path("data/policy_mock_vi.md"))
+            self.policy_store.ensure_index(self.settings.policy_path)
 
         inputs = {"question": question, "trace": []}
         final_state = self.graph.invoke(inputs)
